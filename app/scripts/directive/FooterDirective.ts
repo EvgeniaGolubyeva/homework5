@@ -1,7 +1,7 @@
 'use strict';
 
 function footerDirective(): ng.IDirective {
-    return <ng.IDirective> {
+    return {
         scope: false,
         restrict: 'E',
         templateUrl: 'views/partial/footer.html'
