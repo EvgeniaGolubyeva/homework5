@@ -21,14 +21,30 @@ function searchFormDirective($timeout: ng.ITimeoutService): ng.IDirective {
         },
 
         controller: ["$scope", function ($scope) {
-            $scope.datePickerOpen = function ($event) {
+            $scope.datePickerOpen = ($event) => {
                 $event.preventDefault();
                 $event.stopPropagation();
 
                 $scope.datePickerOpened = true;
             };
+
+            $scope.today = new Date().setHours(0,0,0,0);
+            $scope.searchCriteria.date = $scope.today;
         }]
     }
 }
 
 angular.module("auction").directive('auctionSearchForm', ["$timeout", searchFormDirective]);
+
+//date custom validation
+angular.module("auction").directive('dateValidation', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, elem, attrs, ctrl) {
+            scope.$watch(attrs.ngModel, function () {
+                ctrl.$setValidity('dateMoreThenToday', ctrl.$modelValue >= scope.today);
+            });
+        }
+    }
+});
