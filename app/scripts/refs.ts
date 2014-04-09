@@ -11,6 +11,7 @@
 /// <reference path="directive/FooterDirective.ts" />
 /// <reference path="directive/NavbarDirective.ts" />
 /// <reference path="directive/PriceRangeDirective.ts" />
+/// <reference path="directive/SearchFormDirective.ts" />
 /// <reference path="model/Product.ts" />
 /// <reference path="service/ProductService.ts" />
 //grunt-end

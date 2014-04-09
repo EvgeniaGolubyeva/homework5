@@ -1,35 +1,36 @@
 'use strict';
 
-interface IPriceRangeScope extends ng.IScope {
-    minPrice  : number;
-    maxPrice  : number;
-    lowPrice  : number;
-    highPrice : number;
-}
-
-function priceRangeDirective($timeout: ng.ITimeoutService): ng.IDirective {
+//TODO validation when min = 40 max = 30
+function priceRangeDirective(): ng.IDirective {
     return {
         restrict: 'E',
         templateUrl: 'views/partial/priceRange.html',
-
         scope: {
-            minPrice  : '@',
-            maxPrice  : '@',
+            //if one way binding is not set (min-price attribute is not used) then this undefined value
+            //overrides default value setted as minPrice in controller every time.
+            //so I have separate attrMinPrice for attr and actual minPrice (default or setted) is stored in minPrice
+            attrMinPrice  : '@minPrice',
+            attrMaxPrice  : '@maxPrice',
+
             lowPrice  : '=',
             highPrice : '='
         },
 
-        link: (scope: IPriceRangeScope, element) => {
-            //default values ???
-            var min  = scope.minPrice  || 0;
-            var max  = scope.maxPrice  || 500;
+        controller: ["$scope", ($scope) => {
+            $scope.minPrice = parseInt($scope.attrMinPrice) || 0;
+            $scope.maxPrice = parseInt($scope.attrMaxPrice) || 500;
 
+            $scope.lowPrice  =  $scope.lowPrice  || $scope.minPrice;
+            $scope.highPrice =  $scope.highPrice || $scope.maxPrice;
+        }],
+
+        link: (scope: any, element) => {
             //slider
             var priceSlider : any = angular.element(element).find('div[class="priceRangeSlider"]');
             priceSlider.slider({
-                min: min,
-                max: max,
-                values: [scope.lowPrice  || scope.minPrice, scope.highPrice || scope.maxPrice],
+                min: scope.minPrice,
+                max: scope.maxPrice,
+                values: [scope.lowPrice, scope.highPrice],
                 range: true,
                 slide: (e, ui) => scope.$apply(function () {
                     scope.lowPrice  = ui.values[0];
@@ -50,4 +51,4 @@ function priceRangeDirective($timeout: ng.ITimeoutService): ng.IDirective {
     }
 }
 
-angular.module("auction").directive('auctionPriceRange', ["$timeout", priceRangeDirective]);
+angular.module("auction").directive('auctionPriceRange', priceRangeDirective);

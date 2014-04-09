@@ -9,11 +9,16 @@
     </div>
 
     <div class="col-sm-3">
-        <a href="#" class="btn btn-primary form-control">Find More</a>
+        <button ng-hide="model.isSearchFormVisible" ng-click="model.isSearchFormVisible = true"  class="btn btn-primary form-control">Find more</button>
+        <button ng-show="model.isSearchFormVisible" ng-click="model.isSearchFormVisible = false" class="close" aria-hidden="true">&times;</button>
     </div>
 </div>
 
-<hr>
+<auction-search-form search-criteria="model.searchCriteria"
+                     categories="model.categories"
+                     search="model.search()"
+                     ng-show="model.isSearchFormVisible">
+</auction-search-form>
 
 <div class="row">
     <div class="productTitleSection col-xs-6">
@@ -90,7 +95,7 @@
         <!--Title-->
     <!--</div>-->
 
-    <!--&lt;!&ndash;sx remove float: left and width 100%&ndash;&gt;-->
+    <!--<!--sx remove float: left and width 100%-->-->
     <!--<div style="width: 50%; float: left">-->
         <!--<div style="background: #dddddd; height: 250px;" >-->
             <!--Image-->
@@ -100,7 +105,7 @@
         <!--</div>-->
     <!--</div>-->
 
-    <!--&lt;!&ndash; clear: left&ndash;&gt;-->
+    <!--<!-- clear: left-->-->
     <!--<div style="height: 350px; background: #808080;">-->
         <!--All info-->
     <!--</div>-->

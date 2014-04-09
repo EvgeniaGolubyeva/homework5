@@ -5,88 +5,11 @@
         <li class="active">Search Results</li>
     </ol>
 
-    <div class="row">
-        <!-- product section -->
-        <div class="col-md-4 col-sm-12">
-            <form>
-                <div class="form-group">
-                    <label>Product</label>
-                </div>
 
-                <div class="row">
-
-                    <div class="col-md-12 col-sm-6 form-group">
-                        <input type="text" class="form-control" placeholder="Product Title">
-                    </div>
-
-                    <div class="col-md-12 col-sm-6">
-                        <div class="btn-group btn-group-justified">
-                            <!-- In the mockup split button dropdown is used. But if I use it - cannot make width: 100%,
-                            component breaks into 2 pieces-->
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    Category
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:void(0)">Category 1</a></li>
-                                    <li><a href="javascript:void(0)">Category 2</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </form>
-        </div>
-        <!-- / product section -->
-
-
-        <!-- price section -->
-        <div class="col-md-4 col-sm-6">
-            <form>
-                <div class="form-group">
-                    <label>Current Price</label>
-                </div>
-
-                <auction-price-range low-price="q" high-price="w"></auction-price-range>
-            </form>
-        </div>
-        <!-- / price section -->
-
-
-        <!-- auction section -->
-        <div class="col-md-4 col-sm-6">
-            <form>
-                <div class="form-group">
-                    <label for="datepicker">Max Auction Close Date</label>
-                </div>
-                <div class="form-group">
-                    <input id="datepicker" type="date" class="form-control" placeholder="01/01/2014">
-                </div>
-
-                <div class="form-group row">
-                        <span id="labelSpan" class="col-xs-9 nested-column">
-                            <label for="spinner" class="control-label">Number of Bids</label>
-                        </span>
-                        <span class="col-xs-3 nested-column">
-                            <input id="spinner" type="number" class="pull-right form-control">
-                        </span>
-                </div>
-
-            </form>
-        </div>
-        <!-- / auction section -->
-    </div>
-
-    <!-- find button -->
-    <div class="row text-center">
-        <button type="button" class="btn btn-primary">Find Now</button>
-    </div>
-
-    <!-- divider -->
-    <hr>
-
+    <auction-search-form search-criteria="model.searchCriteria"
+                         categories="model.categories"
+                         search="model.search()">
+    </auction-search-form>
 
     <div class="row">
 
