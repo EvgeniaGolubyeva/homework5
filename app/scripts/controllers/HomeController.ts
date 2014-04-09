@@ -4,16 +4,10 @@
 
 'use strict'
 
-interface IHomeScope extends ng.IScope {
-    model: HomeController;
-}
-
 class HomeController {
-    public static $inject = ['featuredProducts', '$scope'];
+    public static $inject = ['featuredProducts'];
 
-    constructor (private featuredProducts: auction.model.Product[], private $scope: IHomeScope) {
-        this.$scope.model = this;
-    }
+    constructor (private featuredProducts: auction.model.Product[]) {}
 
     public static resolve = {
         featuredProducts: ['ProductService', (productService: auction.service.IProductService) => {

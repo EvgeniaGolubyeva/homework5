@@ -6,9 +6,9 @@
     </ol>
 
 
-    <auction-search-form search-criteria="model.searchCriteria"
-                         categories="model.categories"
-                         search="model.search()">
+    <auction-search-form search-criteria="ctrl.searchCriteria"
+                         categories="ctrl.categories"
+                         search="ctrl.search()">
     </auction-search-form>
 
     <div class="row">
@@ -17,7 +17,7 @@
 
         <ul id="search-results-list" class="list-unstyled">
 
-            <li class="col-md-6" ng-repeat="product in model.searchProducts">
+            <li class="col-md-6" ng-repeat="product in ctrl.searchProducts">
 
                 <div class="row">
                     <div class="col-md-4">

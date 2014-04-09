@@ -15,18 +15,21 @@ auctionApplication.config(['$routeProvider', ($routeProvider: ng.route.IRoutePro
         .when ('/', {
             templateUrl: 'views/home.html',
             controller: 'HomeController',
+            controllerAs: 'ctrl',
             title: 'Home',
             resolve: HomeController.resolve
         })
         .when('/search', {
             templateUrl: 'views/search.html',
             controller: 'SearchController',
+            controllerAs: 'ctrl',
             title: 'Search',
             resolve: SearchController.resolve
         })
         .when('/product/:id', {
             templateUrl: 'views/product.html',
             controller: 'ProductController',
+            controllerAs: 'ctrl',
             title: 'Product',
             resolve: ProductController.resolve
         })

@@ -4,16 +4,12 @@
 
 'use strict'
 
-interface IProductScope extends ng.IScope {
-    model: ProductController;
-}
-
 interface IRouteParamsService extends ng.route.IRouteParamsService {
     id: number;
 }
 
 class ProductController {
-    public static $inject = ["product", '$scope'];
+    public static $inject = ["product"];
 
     private isSearchFormVisible: boolean = false;
 
@@ -21,9 +17,7 @@ class ProductController {
     private searchCriteria: SearchCriteria;
     private search: Function;
 
-    constructor (private product: auction.model.Product, private $scope: IProductScope) {
-        this.$scope.model = this;
-
+    constructor (private product: auction.model.Product) {
         //for search form
         //TODO duplicated in SearchController, do not understand where search results will be displayed
         this.categories     = new Array("Category 1", "Category 2", "Category 3", "Category 4");

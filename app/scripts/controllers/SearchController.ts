@@ -4,20 +4,14 @@
 
 'use strict'
 
-interface ISearchScope extends ng.IScope {
-    model: SearchController;
-}
-
 class SearchController {
-    public static $inject = ['searchProducts', '$scope'];
+    public static $inject = ['searchProducts'];
 
     private categories: string[];
     private searchCriteria: SearchCriteria;
     private search: Function;
 
-    constructor (private searchProducts: auction.model.Product[], private $scope: ISearchScope) {
-        $scope.model = this;
-
+    constructor (private searchProducts: auction.model.Product[]) {
         //for search form
         //TODO duplicated in ProductController
         this.categories     = new Array("Category 1", "Category 2", "Category 3", "Category 4");
