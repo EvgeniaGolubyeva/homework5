@@ -1,50 +1,48 @@
+/// <reference path="../refs.ts" />
+
 'use strict';
 
-class SearchCriteria {
-    public title: string;
-    public category: string;
-    public lowPrice: number;
-    public highPrice: number;
-    public date: Object;
-    public numberOfBids: number;
+class SearchFormController {
+
+    public static $inject = ['$scope', 'SearchCriteriaService', 'ProductService'];
+
+    private searchCriteria: auction.model.SearchCriteria;
+    private categories: string[];
+
+    //for date picker
+    private minDate: number;
+    private isPopupOpened: boolean;
+
+    constructor($scope: any,
+                searchCriteriaService: auction.service.ISearchCriteriaService,
+                categoriesService: auction.service.ICategoriesService) {
+        //scope initialization
+        this.searchCriteria = searchCriteriaService.getSearchCriteria();
+        categoriesService.getCategories().then((data) => this.categories = data);
+
+        this.minDate = new Date().setHours(0,0,0,0);
+        this.isPopupOpened = false;
+    }
+
+    //method for datepicker button
+    private openPopup ($event: ng.IAngularEvent): void {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        this.isPopupOpened = true;
+    }
 }
 
-function searchFormDirective($timeout: ng.ITimeoutService): ng.IDirective {
+function searchFormDirective(): ng.IDirective {
     return {
         restrict: 'E',
         templateUrl: 'views/partial/searchForm.html',
-
         scope: {
-            searchCriteria: "=",
-            categories: "=",
-            search: "&"
+            searchResultsUrl: "@"
         },
-
-        controller: ["$scope", function ($scope) {
-            $scope.datePickerOpen = ($event) => {
-                $event.preventDefault();
-                $event.stopPropagation();
-
-                $scope.datePickerOpened = true;
-            };
-
-            $scope.today = new Date().setHours(0,0,0,0);
-            $scope.searchCriteria.date = $scope.today;
-        }]
+        controller: SearchFormController,
+        controllerAs: 'ctrl'
     }
 }
 
-angular.module("auction").directive('auctionSearchForm', ["$timeout", searchFormDirective]);
-
-//date custom validation
-angular.module("auction").directive('dateValidation', function() {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, elem, attrs, ctrl) {
-            scope.$watch(attrs.ngModel, function () {
-                ctrl.$setValidity('dateMoreThenToday', ctrl.$modelValue >= scope.today);
-            });
-        }
-    }
-});
+angular.module('auction').directive('auctionSearchForm', searchFormDirective);

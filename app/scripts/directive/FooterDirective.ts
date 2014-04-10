@@ -1,3 +1,5 @@
+/// <reference path="../refs.ts" />
+
 'use strict';
 
 function footerDirective(): ng.IDirective {
@@ -8,4 +10,4 @@ function footerDirective(): ng.IDirective {
     }
 }
 
-angular.module("auction").directive('auctionFooter', footerDirective);
+angular.module('auction').directive('auctionFooter', footerDirective);
