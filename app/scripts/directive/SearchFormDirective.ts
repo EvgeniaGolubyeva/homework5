@@ -8,28 +8,15 @@ class SearchFormController {
 
     private searchCriteria: auction.model.SearchCriteria;
     private categories: string[];
-
-    //for date picker
     private minDate: number;
-    private isPopupOpened: boolean;
 
     constructor($scope: any,
                 searchCriteriaService: auction.service.ISearchCriteriaService,
                 categoriesService: auction.service.ICategoriesService) {
-        //scope initialization
         this.searchCriteria = searchCriteriaService.getSearchCriteria();
         categoriesService.getCategories().then((data) => this.categories = data);
 
         this.minDate = new Date().setHours(0,0,0,0);
-        this.isPopupOpened = false;
-    }
-
-    //method for datepicker button
-    private openPopup ($event: ng.IAngularEvent): void {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        this.isPopupOpened = true;
     }
 }
 

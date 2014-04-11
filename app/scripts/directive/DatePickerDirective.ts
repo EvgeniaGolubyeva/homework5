@@ -3,11 +3,9 @@
 'use strict';
 
 class DatePickerController {
-    private minDate: number;
     private isPopupOpened: boolean;
 
     constructor() {
-        this.minDate = new Date().setHours(0,0,0,0);
         this.isPopupOpened = false;
     }
 
