@@ -45,19 +45,11 @@
         <!-- auction section -->
         <div class="col-md-4 col-sm-6">
             <div class="form-group">
-                <label for="datepicker">Max Auction Close Date</label>
+                <label>Max Auction Close Date</label>
             </div>
             <div class="form-group">
-                <div class="input-group">
-                    <input id="datepicker" name="closeDate" type="text" class="form-control" is-open="ctrl.isPopupOpened"
-                           datepicker-popup='MM/dd/yyyy' ng-model="ctrl.searchCriteria.date"
-                           min="ctrl.minDate" auction-date-picker-validation/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="ctrl.openPopup($event)">
-                            <i class="glyphicon glyphicon-calendar"></i>
-                        </button>
-                    </span>
-                </div>
+                <auction-date-picker ng-model="ctrl.searchCriteria.date" min="ctrl.minDate" name="closeDate" class="date-picker">
+                </auction-date-picker>
                 <p ng-show="searchform.closeDate.$invalid" class="help-block ng-invalid" >
                     Close Date should be greater then today
                 </p>
