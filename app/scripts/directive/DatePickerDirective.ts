@@ -32,25 +32,19 @@ function datePickerDirective(): ng.IDirective {
         controllerAs: 'ctrl',
         require: 'ngModel',
         link: function(scope: any, elem, attrs) {
-            //By default datePicker validates of it's popup ONLY.
-            //It can be seen here: http://angular-ui.github.io/bootstrap/
+            //By default datePicker validates it's popup ONLY.
+            // http://angular-ui.github.io/bootstrap/
             //If invalid date is chosen than only popup is considered to be invalid,
-            //not the input itself.
-            //Add validation to datePicker input and all composite directive
-            //may be validation can be checked by inner-inner ul (popup)?...
+            //not the input.
+
+            //1. may be validation can be checked by inner-inner ul (popup)?...
+            //2. ngModel contains invalid value...
             var ctrl = elem.controller('ngModel');
 
-            var validate = function(value) {
+            ctrl.$formatters.push(function(value) {
                 var isValid = value >= scope.minDate;
                 ctrl.$setValidity('date', isValid);
-                return value;
-            };
-
-            ctrl.$parsers.unshift(validate);
-            ctrl.$formatters.push(validate);
-
-            scope.$watch('ngModel', function (newValue) {
-                validate(ctrl.$viewValue);
+                return isValid ? value : scope.minDate;
             });
         }
     }
