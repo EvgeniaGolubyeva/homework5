@@ -8,7 +8,7 @@ module auction.service {
 
     export interface IProductService {
         getFeaturedProducts: () => ng.IPromise<m.Product[]>;
-        getSearchProducts:(searchCriteria: m.SearchCriteria) => ng.IPromise<m.Product[]>;
+        getSearchProducts:(params: string[]) => ng.IPromise<m.Product[]>;
         getProduct: (id: number) => ng.IPromise<m.Product>;
     }
 
@@ -36,8 +36,8 @@ module auction.service {
             );
         }
 
-        public getSearchProducts(searchCriteria: m.SearchCriteria): ng.IPromise<m.Product[]> {
-            return this.restangularResource.one('search').get(/*searchCriteria*/).then(
+        public getSearchProducts(params: string[]): ng.IPromise<m.Product[]> {
+            return this.restangularResource.one('search').get(/*params*/).then(
                 (response) => <m.Product[]> response.items,
                 (reason) => this.$log.error("Can not get search products", reason)
             );
@@ -46,14 +46,14 @@ module auction.service {
         public getProduct(id: number): ng.IPromise<m.Product> {
             return this.restangularResource.one(id).get().then(
                 (response) => <m.Product[]> response,
-                (reason) => this.$log.error("Can not get search products", reason)
+                (reason) => this.$log.error("Can not get product", reason)
             );
         }
 
         //invoked by SearchFormController to populate categories select(comboBox)
         public getCategories(): ng.IPromise<string[]> {
             var res = this.$q.defer();
-            res.resolve(new Array('Category 1', 'Category 2', 'Category 3', 'Category 4'));
+            res.resolve(['Category 1', 'Category 2', 'Category 3', 'Category 4']);
             return res.promise;
         }
     }

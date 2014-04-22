@@ -9,13 +9,13 @@
             <a class="navbar-brand" href="#/">ABC Auction</a>
         </div>
         <div class="navbar-collapse collapse">
-            <!-- ng-show="$root.title == 'Home' ??? -->
-            <form class="navbar-form navbar-left navbar-input-group" role="search" name="navbarSearchForm" ng-show="$root.title == 'Home'">
+            <form class="navbar-form navbar-left navbar-input-group" role="search"
+                  name="navbarSearchForm" ng-show="ctrl.isSearchVisible()">
                 <div class="form-group">
                     <input type="text" class="form-control" name="title" placeholder="Enter product name"
-                           ng-model="searchCriteria.title" ng-minlength="3">
+                           ng-model="ctrl.productTitle" ng-minlength="3">
                 </div>&nbsp;
-                <a ng-href="#/search" class="btn btn-default" ng-disabled="navbarSearchForm.title.$invalid">Search</a>
+                <a ng-click="ctrl.search()" class="btn btn-default" ng-disabled="navbarSearchForm.title.$invalid">Search</a>
             </form>
 
             <ul class="nav navbar-nav navbar-right">

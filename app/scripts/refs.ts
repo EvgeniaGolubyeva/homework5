@@ -1,5 +1,6 @@
 /// <reference path="../bower_components/DefinitelyTyped/jquery/jquery.d.ts" />
 /// <reference path="../bower_components/DefinitelyTyped/jqueryui/jqueryui.d.ts" />
+/// <reference path="../bower_components/DefinitelyTyped/lodash/lodash.d.ts" />
 /// <reference path="../bower_components/DefinitelyTyped/angularjs/angular.d.ts" />
 /// <reference path="../bower_components/DefinitelyTyped/angularjs/angular-route.d.ts" />
 /// <reference path="../bower_components/DefinitelyTyped/restangular/restangular.d.ts" />
@@ -15,7 +16,5 @@
 /// <reference path="directive/PriceRangeDirective.ts" />
 /// <reference path="directive/SearchFormDirective.ts" />
 /// <reference path="model/Product.ts" />
-/// <reference path="model/SearchCriteria.ts" />
 /// <reference path="service/ProductService.ts" />
-/// <reference path="service/SearchCriteriaService.ts" />
 //grunt-end

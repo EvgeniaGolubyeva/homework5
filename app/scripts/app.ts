@@ -44,16 +44,10 @@ auctionApplication.config(['RestangularProvider', (RestangularProvider) => {
     RestangularProvider.setBaseUrl("http://webauctionv1.apiary-mock.com/");
 }]);
 
-auctionApplication.run(["$rootScope", "SearchCriteriaService",
-    ($rootScope: any, searchCriteriaService: auction.service.ISearchCriteriaService) => {
+auctionApplication.run(["$rootScope", ($rootScope: any) => {
         $rootScope.$on("$routeChangeStart", (event:ng.IAngularEvent, next:any):any => {
             //assign title
             $rootScope.title = next.title;
-
-            //clear searchCriteria when user goes to home page
-            if ($rootScope.title == PageTitles.HOME) {
-                searchCriteriaService.resetSearchCriteria();
-            }
         });
     }
 ]);

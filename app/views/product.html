@@ -9,12 +9,21 @@
     </div>
 
     <div ng-class="{'col-sm-3': !ctrl.isSearchFormVisible}">
-        <button ng-hide="ctrl.isSearchFormVisible" ng-click="ctrl.isSearchFormVisible = true"  class="btn btn-primary form-control">Find more</button>
-        <button ng-show="ctrl.isSearchFormVisible" ng-click="ctrl.isSearchFormVisible = false" class="close" aria-hidden="true">&times;</button>
+        <button ng-hide="ctrl.isSearchFormVisible"
+                ng-click="ctrl.isSearchFormVisible = true"
+                class="btn btn-primary form-control">
+            Find more
+        </button>
+
+        <button ng-show="ctrl.isSearchFormVisible"
+                ng-click="ctrl.isSearchFormVisible = false"
+                class="close" aria-hidden="true">
+            &times;
+        </button>
     </div>
 </div>
 
-<auction-search-form search-results-url="#/search" ng-show="ctrl.isSearchFormVisible"></auction-search-form>
+<auction-search-form ng-show="ctrl.isSearchFormVisible"></auction-search-form>
 
 <div class="row">
     <div class="productTitleSection col-xs-6">
