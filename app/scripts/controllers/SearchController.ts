@@ -1,30 +1,18 @@
-// Implement SearchController here. It should manage Search Results page.
-
 /// <reference path="../refs.ts" />
 
 'use strict';
 
 class SearchController {
-    public static $inject = ['searchProducts', 'searchCriteria', 'categories'];
+    public static $inject = ['searchProducts'];
 
-    constructor (private searchProducts: auction.model.Product[],
-                 private searchCriteria: auction.model.SearchCriteria,
-                 private categories: string[])
+    constructor (private searchProducts: auction.model.Product[])
     {}
 
     public static resolve = {
-        searchProducts: ['ProductService','SearchCriteriaService',
+        searchProducts: ['ProductService','$location',
             (productService: auction.service.IProductService,
-             searchCriteriaService: auction.service.ISearchCriteriaService) => {
-            return productService.getSearchProducts(searchCriteriaService.getSearchCriteria()).then (function (data) {
-                return data;
-            });
-        }],
-        searchCriteria: ['SearchCriteriaService', (searchCriteriaService: auction.service.ISearchCriteriaService) => {
-            return searchCriteriaService.getSearchCriteria();
-        }],
-        categories: ['ProductService', (categoriesService: auction.service.ICategoriesService) => {
-            return categoriesService.getCategories().then (function (data) {
+             $location: ng.ILocationService) => {
+            return productService.getSearchProducts($location.search()).then (function (data) {
                 return data;
             });
         }]

@@ -9,7 +9,7 @@ module auction.service {
     export interface IProductService {
         getFeaturedProducts: () => ng.IPromise<m.Product[]>;
 
-        getSearchProducts:(searchCriteria: m.SearchCriteria) => ng.IPromise<m.Product[]>;
+        getSearchProducts:(params: string[]) => ng.IPromise<m.Product[]>;
 
         getProduct: (id: number) => ng.IPromise<m.Product>;
     }
@@ -35,16 +35,9 @@ module auction.service {
             return this.getDataFromJSON(this.FEATURED_PRODUCTS_FILE);
         }
 
-        //invoked by SearchController.resolve,
-        //navbar and searchForm has links with href="#/search"
-        public getSearchProducts(searchCriteria: m.SearchCriteria): ng.IPromise<m.Product[]> {
+        public getSearchProducts(params: string[]): ng.IPromise<m.Product[]> {
             var search = this.restangular.one('search');
-            search.get(searchCriteria);
-
-            //how to mantain history in case of search?
-            //this doesn't really work, but temporary helps to reload search page
-            //should it be done here at all?
-            this.$location.search(searchCriteria);
+            search.get(params);
 
             return this.getDataFromJSON(this.SEARCH_PRODUCTS_FILE);
         }
