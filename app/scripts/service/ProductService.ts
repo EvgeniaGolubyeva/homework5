@@ -8,9 +8,7 @@ module auction.service {
 
     export interface IProductService {
         getFeaturedProducts: () => ng.IPromise<m.Product[]>;
-
         getSearchProducts:(searchCriteria: m.SearchCriteria) => ng.IPromise<m.Product[]>;
-
         getProduct: (id: number) => ng.IPromise<m.Product>;
     }
 
@@ -19,51 +17,36 @@ module auction.service {
     }
 
     export class ProductService implements IProductService, ICategoriesService {
-        public static $inject = ['Restangular', '$location', '$http', '$log', '$q'];
+        public static $inject = ['Restangular', '$location', '$log', '$q'];
 
-        private FEATURED_PRODUCTS_FILE: string = 'data/featured.json';
-        private SEARCH_PRODUCTS_FILE:   string = 'data/search.json';
+        private restangularResource;
 
         constructor(private restangular: Restangular,
                     private $location:   ng.ILocationService,
-                    private $http:       ng.IHttpService,
                     private $log:        ng.ILogService,
                     private $q:          ng.IQService)
-        {}
-
-        public getFeaturedProducts(): ng.IPromise<m.Product[]> {
-            return this.getDataFromJSON(this.FEATURED_PRODUCTS_FILE);
+        {
+            this.restangularResource = this.restangular.all("product");
         }
 
-        //invoked by SearchController.resolve,
-        //navbar and searchForm has links with href="#/search"
+        public getFeaturedProducts(): ng.IPromise<m.Product[]> {
+            return this.restangularResource.one('featured').get().then(
+                (response) => <m.Product[]> response.items,
+                (reason) => this.$log.error("Can not get featured products", reason)
+            );
+        }
+
         public getSearchProducts(searchCriteria: m.SearchCriteria): ng.IPromise<m.Product[]> {
-            var search = this.restangular.one('search');
-            search.get(searchCriteria);
-
-            //how to mantain history in case of search?
-            //this doesn't really work, but temporary helps to reload search page
-            //should it be done here at all?
-            this.$location.search(searchCriteria);
-
-            return this.getDataFromJSON(this.SEARCH_PRODUCTS_FILE);
+            return this.restangularResource.one('search').get(/*searchCriteria*/).then(
+                (response) => <m.Product[]> response.items,
+                (reason) => this.$log.error("Can not get search products", reason)
+            );
         }
 
         public getProduct(id: number): ng.IPromise<m.Product> {
-            return this.$q.all([this.getDataFromJSON(this.FEATURED_PRODUCTS_FILE),
-                                this.getDataFromJSON(this.SEARCH_PRODUCTS_FILE)]).then(
-                (products) => {
-                    var combined = products[0].concat(products[1]);
-
-                    var found = combined.filter(function(p) {
-                        return p.id == id
-                    });
-
-                    return found.length == 1 ? found[0] : this.$q.reject('Single product with specified id is not found');
-                },
-                (reason) => {
-                    return this.$q.reject(reason);
-                }
+            return this.restangularResource.one(id).get().then(
+                (response) => <m.Product[]> response,
+                (reason) => this.$log.error("Can not get search products", reason)
             );
         }
 
@@ -72,15 +55,6 @@ module auction.service {
             var res = this.$q.defer();
             res.resolve(new Array('Category 1', 'Category 2', 'Category 3', 'Category 4'));
             return res.promise;
-        }
-
-        private getDataFromJSON(fileName: string): ng.IPromise<m.Product[]> {
-            return this.$http.get(fileName).then(
-                (response) => <m.Product[]> response.data.items,
-                (reason)   => {
-                    this.$log.error('Can not load file ' + fileName);
-                    return this.$q.reject(reason);
-                });
         }
     }
 

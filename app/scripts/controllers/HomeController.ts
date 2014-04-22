@@ -10,9 +10,7 @@ class HomeController {
 
     public static resolve = {
         featuredProducts: ['ProductService', (productService: auction.service.IProductService) => {
-            return productService.getFeaturedProducts().then ((data) => {
-                return data;
-            });
+            return productService.getFeaturedProducts();
         }]
     }
 }

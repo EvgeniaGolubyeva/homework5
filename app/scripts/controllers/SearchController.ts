@@ -16,17 +16,13 @@ class SearchController {
         searchProducts: ['ProductService','SearchCriteriaService',
             (productService: auction.service.IProductService,
              searchCriteriaService: auction.service.ISearchCriteriaService) => {
-            return productService.getSearchProducts(searchCriteriaService.getSearchCriteria()).then (function (data) {
-                return data;
-            });
+            return productService.getSearchProducts(searchCriteriaService.getSearchCriteria());
         }],
         searchCriteria: ['SearchCriteriaService', (searchCriteriaService: auction.service.ISearchCriteriaService) => {
             return searchCriteriaService.getSearchCriteria();
         }],
         categories: ['ProductService', (categoriesService: auction.service.ICategoriesService) => {
-            return categoriesService.getCategories().then (function (data) {
-                return data;
-            });
+            return categoriesService.getCategories();
         }]
     }
 }

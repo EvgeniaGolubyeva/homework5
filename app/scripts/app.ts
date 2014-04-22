@@ -40,6 +40,10 @@ auctionApplication.config(['$routeProvider', ($routeProvider: ng.route.IRoutePro
         });
 }]);
 
+auctionApplication.config(['RestangularProvider', (RestangularProvider) => {
+    RestangularProvider.setBaseUrl("http://webauctionv1.apiary-mock.com/");
+}]);
+
 auctionApplication.run(["$rootScope", "SearchCriteriaService",
     ($rootScope: any, searchCriteriaService: auction.service.ISearchCriteriaService) => {
         $rootScope.$on("$routeChangeStart", (event:ng.IAngularEvent, next:any):any => {

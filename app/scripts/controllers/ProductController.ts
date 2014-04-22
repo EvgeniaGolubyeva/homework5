@@ -15,9 +15,7 @@ class ProductController {
     public static resolve = {
         product: ['ProductService', '$route',
             (productService: auction.service.IProductService, $route: ng.route.IRouteService) => {
-                return productService.getProduct($route.current.params.id).then ((data) => {
-                    return data;
-                });
+                return productService.getProduct($route.current.params.id);
             }
         ]
     }
