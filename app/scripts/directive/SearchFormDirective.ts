@@ -53,9 +53,7 @@ function searchFormDirective(): ng.IDirective {
     return {
         restrict: 'E',
         templateUrl: 'views/partial/searchForm.html',
-        scope: {
-            searchResultsUrl: "@"
-        },
+        scope: {},
         controller: SearchFormController,
         controllerAs: 'ctrl'
     }
